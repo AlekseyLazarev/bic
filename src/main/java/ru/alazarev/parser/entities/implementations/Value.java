@@ -1,4 +1,6 @@
-package ru.alazarev.parser;
+package ru.alazarev.parser.entities.implementations;
+
+import ru.alazarev.parser.entities.interfaces.IValue;
 
 import java.util.Objects;
 
@@ -9,7 +11,7 @@ import java.util.Objects;
  *
  * @author a.lazarev
  */
-public class Column {
+public class Value implements IValue {
     private int column;
     private String value;
     private boolean notEmpty;
@@ -20,21 +22,13 @@ public class Column {
      * @param column Number of column.
      * @param value  Value of column.
      */
-    public Column(int column, String value) {
+    public Value(int column, String value) {
         this.column = column;
         this.value = value.replace("\"", "");
-        if (this.value.equals("")) {
-            notEmpty = false;
-        } else {
-            notEmpty = true;
-        }
+        notEmpty = !this.value.equals("");
     }
 
-    /**
-     * Check empty column or not.
-     *
-     * @return result of check
-     */
+    @Override
     public boolean isNotEmpty() {
         return notEmpty;
     }
@@ -43,7 +37,7 @@ public class Column {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Column that = (Column) o;
+        Value that = (Value) o;
         return column == that.column &&
                 value.equals(that.value);
     }
